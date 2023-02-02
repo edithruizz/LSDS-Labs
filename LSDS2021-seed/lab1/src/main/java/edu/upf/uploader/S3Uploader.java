@@ -12,17 +12,17 @@ import java.util.List;
 
 public class S3Uploader implements Uploader {
     private final String bucket;
-        private final String prefix;
-        private final String profilename;
+    private final String prefix;
+    private final String profilename;
     
     
-     public S3Uploader(String bucket, String prefix, String profilename){
-    
+    public S3Uploader(String bucket, String prefix, String profilename){
         this.bucket = bucket;
         this.prefix = prefix;
         this.profilename = profilename;
-    
     }
+
+
     @Override
     public void upload(List<String> files) {
         try {
@@ -43,7 +43,6 @@ public class S3Uploader implements Uploader {
         } catch (SdkClientException e) {
             e.printStackTrace();
         }
-    
-        }
     }
+}
 

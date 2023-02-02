@@ -37,7 +37,7 @@ public class SimplifiedTweet {
     } else {
         return false;
     }
-}
+  }
 
   /**
    * Returns a {@link SimplifiedTweet} from a JSON String.

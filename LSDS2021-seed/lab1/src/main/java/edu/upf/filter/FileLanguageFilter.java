@@ -1,5 +1,5 @@
 package edu.upf.filter;
-import upf.edu.parser.SimplifiedTweet;
+import edu.upf.parser.SimplifiedTweet;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
