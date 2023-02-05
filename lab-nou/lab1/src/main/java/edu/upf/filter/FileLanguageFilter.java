@@ -21,32 +21,47 @@ public class FileLanguageFilter {
 
     }
 
-    public void filterLanguage(String language) throws Exception {
+	public void filterLanguage(String language) throws IOException{
+		BufferedReader bufferedReader= null;
+		BufferedWriter bufferedWriter= null;
+		
+		try {
+			//Creates a new FileReader, given the File to read from.
+ 
+		FileReader reader = new FileReader(inputFile);
 
-        //CODE
-        try (FileReader reader = new FileReader(inputFile);
-             BufferedReader bReader = new BufferedReader(reader);
-             FileWriter writer = new FileWriter(outputFile, true);
-             BufferedWriter bWriter = new BufferedWriter(writer)) {
-            String line = bReader.readLine();
+		 bufferedReader = new BufferedReader(reader);
+		 FileWriter writer = new FileWriter(outputFile);
+		bufferedWriter = new BufferedWriter(writer);
 
-            while(line != null) {
+		 String line;
+		 while((line= bufferedReader.readLine()) != null){
+			 Optional<SimplifiedTweet> t = SimplifiedTweet.fromJson(line);
+			 if(t.isPresent()) {
+				 String lang = t.get().getLanguage();
+				 if(language.equals(lang)) {
+						bufferedWriter.write(t.get().toString()); // Write one line of content with override given method
+						bufferedWriter.newLine(); //needed so next line is on a new line
+					 
+				 }
+			 }
+		 }
+			
+			
+		} catch(IOException ex) {
+		 ex.printStackTrace();
+		 throw ex;
+		} finally {
+		 // Close resources
+			if (bufferedReader != null) {
+				 bufferedReader.close();// Close buffered reader and enclosed reader
 
-                if(line.length() >0){
-                Optional<SimplifiedTweet> tweet = SimplifiedTweet.fromJson(line);
-                if (tweet.isPresent()){
-                    if ((SimplifiedTweet.getLanguage(tweet)).equals("es")){
-                        String ugh = SimplifiedTweet.changeFormat(tweet);
-                        bWriter.write(ugh);
-                        bWriter.newLine();// Write one line of content
+			}
+			if (bufferedWriter != null) {
+				 bufferedWriter.close(); // Close buffered writer and enclosed writer
 
-                    }
-                }}
-                line = bReader.readLine();
-            }
-            bReader.close();
-            bWriter.close();
-        }
-
-    }
+			}
+			
+		}
+		}
 }
