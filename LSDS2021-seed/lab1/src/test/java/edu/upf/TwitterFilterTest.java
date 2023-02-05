@@ -4,7 +4,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 import java.io.BufferedReader;
 import java.io.FileReader;
 import edu.upf.filter.FileLanguageFilter;
@@ -37,22 +40,38 @@ public class TwitterFilterTest
         String outputFile = argsList.get(1);
         String bucket = argsList.get(2);
 
+<<<<<<< Updated upstream
         long startTime = System.nanoTime();
         System.out.println("Language: " + language + ". Output file: " + outputFile + ". Destination bucket: " + bucket);
+=======
+        long startTime = System.nanoTime();     // start benchmark
+
+        System.out.println("Language: " + language + ". Output file: " + outputFile + ". Destination bucket: " + bucket);
+
+>>>>>>> Stashed changes
         for (String inputFile : argsList.subList(3, argsList.size())) {
             System.out.println("Processing: " + inputFile);
             final FileLanguageFilter filter = new FileLanguageFilter(inputFile, outputFile);
             filter.filterLanguage(language);
+<<<<<<< Updated upstream
 
         }
         long endTime = System.nanoTime();
+=======
+        }
+
+        long endTime = System.nanoTime();       // stop benchmark
+>>>>>>> Stashed changes
         
         BufferedReader reader = new BufferedReader(new FileReader(outputFile));
         int lines = 0;
         while (reader.readLine() != null) lines++;
         reader.close();
         
+<<<<<<< Updated upstream
         
+=======
+>>>>>>> Stashed changes
         System.out.println("Took " + (endTime - startTime)/ 1000000000 + " seconds" +
                 " to filter tweets in " + language + ".");
         System.out.println("There are " + lines + " tweets in " + language + ".");
@@ -61,5 +80,8 @@ public class TwitterFilterTest
         uploader.upload(Arrays.asList(outputFile));
     }
 
+<<<<<<< Updated upstream
     
+=======
+>>>>>>> Stashed changes
 }

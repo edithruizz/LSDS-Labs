@@ -8,6 +8,5 @@ public interface LanguageFilter {
    * @return
    */
   void filterLanguage(String language) throws Exception;
-
     
 }

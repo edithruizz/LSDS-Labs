@@ -10,6 +10,7 @@ public class SimplifiedTweet {
 
   // All classes use the same instance
   private static JsonParser parser = new JsonParser();
+
   private final long tweetId;			    // the id of the tweet ('id')
   private final String text;  		    // the content of the tweet ('text')
   private final long userId;			    // the user id ('user->id')
@@ -17,25 +18,29 @@ public class SimplifiedTweet {
   private final String language;      // the language of a tweet ('lang')
   private final long timestampMs;		  // seconduserIds from epoch ('timestamp_ms')
 
+  // Constructor
   public SimplifiedTweet(long tweetId, String text, long userId, String userName, String language, long timestampMs) {
-
-    // PLACE YOUR CODE HERE!
     this.tweetId = tweetId;
     this.text = text;
     this.userId = userId;
     this.userName = userName;
     this.language = language;
     this.timestampMs = timestampMs;
-
   }
 
-  public static Boolean checkfields(JsonObject o) {
+  /**
+   * 
+   * @param o
+   * @return boolean indicating if fields are present or not
+   */
+  public static Boolean checkfields(JsonObject o) {   // check if tweet has all necessary fields
 
     if (o.has("id") && o.has("text") && o.has("user") && o.has("lang") && o.has("timestamp_ms")) {
-        JsonObject o2 = o.getAsJsonObject("user");
-        return (o2.has("id") && o2.has("name"));
-    } else {
-        return false;
+      JsonObject o2 = o.getAsJsonObject("user");
+      return (o2.has("id") && o2.has("name"));
+    }
+    else {
+      return false;
     }
   }
 
@@ -47,30 +52,32 @@ public class SimplifiedTweet {
    * @return an {@link Optional} of a {@link SimplifiedTweet}
    */
   public static Optional<SimplifiedTweet> fromJson(String jsonStr) { //passa una string
-    // PLACE YOUR CODE HERE!
+
     Optional<SimplifiedTweet> st = Optional.empty();
     try{ 
-      parser.parse(jsonStr); //primer detectar si l'objecte es Json
+      parser.parse(jsonStr);  // check if object is json
       JsonElement je = parser.parse(jsonStr);
       JsonObject jsonObject = je.getAsJsonObject();
-      if(checkfields(jsonObject)){ //te tots els camps: tweetId, text, userId, userName, language, timestampMs
+
+      if(checkfields(jsonObject)){      // if all fields are present
+
         JsonObject jObjects = jsonObject.getAsJsonObject("user");
 
-                long a = jsonObject.get("id").getAsLong();
-                String b = jsonObject.get("text").toString();
-                long c = jObjects.get("id").getAsLong();    //cambiar
-                String d = jObjects.get("name").toString(); // cambair a
-                String e = jsonObject.get("lang").toString();
-                long f = jsonObject.get("timestamp_ms").getAsLong();
+        long a = jsonObject.get("id").getAsLong();
+        String b = jsonObject.get("text").toString();
+        long c = jObjects.get("id").getAsLong();
+        String d = jObjects.get("name").toString();
+        String e = jsonObject.get("lang").toString();
+        long f = jsonObject.get("timestamp_ms").getAsLong();
 
-            st = Optional
-                .ofNullable(a)
-                .flatMap(text -> Optional.ofNullable(b))
-                .flatMap(userId -> Optional.ofNullable(c))
-                .flatMap(userName -> Optional.ofNullable(d))
-                .flatMap(lang -> Optional.ofNullable(e))
-                .flatMap(time -> Optional.ofNullable(f))
-                .map(g -> new SimplifiedTweet(a, b, c, d, e, f));
+        st = Optional
+          .ofNullable(a)
+          .flatMap(text -> Optional.ofNullable(b))
+          .flatMap(userId -> Optional.ofNullable(c))
+          .flatMap(userName -> Optional.ofNullable(d))
+          .flatMap(lang -> Optional.ofNullable(e))
+          .flatMap(time -> Optional.ofNullable(f))
+          .map(g -> new SimplifiedTweet(a, b, c, d, e, f));
       }
     }catch (Exception e) {
       return Optional.empty();    //if parsing fails
@@ -80,15 +87,14 @@ public class SimplifiedTweet {
 
   @Override
   public String toString() {
-    //crec q no cal fer res mes
-    return new Gson().toJson(this); //passa el objecte sencer (this) de java a json
+    return new Gson().toJson(this);   // transform object this from java to json
     //return "";
   }
 
   /**
    * 
    * @param tweet
-   * @return
+   * @return language of the tweet
    */
   public static String getLanguage(Optional<SimplifiedTweet> tweet){
     String lang = tweet.get().language;
@@ -101,16 +107,15 @@ public class SimplifiedTweet {
    * @param tweet
    * @return
    */
-  public static String changeFormat(Optional<SimplifiedTweet> tweet){
+  public static String changeFormat(Optional<SimplifiedTweet> tweet){    // format the simplified tweet
     SimplifiedTweet something = tweet.get();
     String line =
         "id: "+ something.tweetId +
-                "  " + "text: " + something.text +
-                "  " + "userId:  " + something.userId +
-                "  " + " userName: " +something.userName +
-                "  " + "language: " + something.language +
-                "  " + "timestampMs: " + something.timestampMs;
+          "  " + "text: " + something.text +
+          "  " + "userId:  " + something.userId +
+          "  " + " userName: " +something.userName +
+          "  " + "language: " + something.language +
+          "  " + "timestampMs: " + something.timestampMs;
     return line;
-
   } 
 }

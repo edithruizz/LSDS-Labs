@@ -15,13 +15,12 @@ public class S3Uploader implements Uploader {
     private final String prefix;
     private final String profilename;
     
-    
+    // Constructor
     public S3Uploader(String bucket, String prefix, String profilename){
         this.bucket = bucket;
         this.prefix = prefix;
         this.profilename = profilename;
     }
-
 
     @Override
     public void upload(List<String> files) {
@@ -29,15 +28,14 @@ public class S3Uploader implements Uploader {
             ProfileCredentialsProvider profile = new ProfileCredentialsProvider(profilename);
     
             AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                     .withCredentials(profile)
-                     .withRegion("us-east-1")
-                     .build();
+                .withCredentials(profile)
+                .withRegion("us-east-1")
+                .build();
     
             for (String file : files) {
                 PutObjectRequest request = new PutObjectRequest(bucket, prefix, new File(file));
                 s3Client.putObject(request);
             }
-    
         } catch (AmazonServiceException e) {
             e.printStackTrace();
         } catch (SdkClientException e) {
