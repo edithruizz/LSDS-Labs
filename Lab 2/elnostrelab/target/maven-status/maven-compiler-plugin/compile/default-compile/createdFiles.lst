@@ -1,0 +1,5 @@
+edu\upf\spark\BiGramsApp.class
+edu\upf\spark\TwitterLanguageFilterApp.class
+edu\upf\model\SimplifiedTweet.class
+edu\upf\spark\Bigram.class
+edu\upf\model\ExtendedSimplifiedTweet.class
