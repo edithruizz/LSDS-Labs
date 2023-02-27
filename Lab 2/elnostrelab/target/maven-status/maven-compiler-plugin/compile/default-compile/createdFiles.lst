@@ -1,0 +1,3 @@
+edu\upf\spark\TwitterLanguageFilterApp.class
+edu\upf\model\SimplifiedTweet.class
+edu\upf\spark\WordCount.class

@@ -12,7 +12,7 @@ import scala.Tuple2;
 import java.util.Arrays;
 
 public class TwitterLanguageFilterApp {
-
+    
     public static void main(String[] args){
 
         String language = args[0];
@@ -23,7 +23,7 @@ public class TwitterLanguageFilterApp {
 
 
         //Create a SparkContext to initialize
-        SparkConf conf = new SparkConf().setAppName("Twitter Language Filter App");
+        SparkConf conf = new SparkConf().setAppName("TwitterLanguageFilterApp");
         JavaSparkContext sparkContext = new JavaSparkContext(conf);
         
         // Load input
@@ -42,4 +42,5 @@ public class TwitterLanguageFilterApp {
     private static String normalise(String word) {
         return word.trim().toLowerCase();
     }
+
 }
